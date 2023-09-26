@@ -24,7 +24,7 @@ public class QuickUnionUF {
 
     public QuickUnionUF(int N) {
         ids = Enumerable.Range(0, N).ToArray();
-        Array.Fill(sizes, 1);
+        sizes = Enumerable.Repeat(1, N).ToArray();
     }
 
     public void union(int a, int b) {
@@ -51,6 +51,10 @@ public class QuickUnionUF {
             i = ids[i];
         }
         return i;
+    }
+
+    public void print() {
+        Console.WriteLine(string.Join(", ", ids));
     }
 }
 
