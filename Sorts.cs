@@ -7,8 +7,8 @@ public class Sorts
     {
         Console.WriteLine("\n# Sorts\n");
 
-        int[] test = new int[500000];
-        for (int i = 0; i < 500000; i++)
+        int[] test = new int[50000];
+        for (int i = 0; i < 50000; i++)
         {
             Random random = new Random();
             test[i] = random.Next(-500000, 500000);
