@@ -174,6 +174,17 @@ public class LLQueue<T>
         }
         return len;
     }
+
+    public IEnumerator<T> GetEnumerator()
+    {
+        Node<T> cur = first;
+        while (cur != null)
+        {
+            T value = cur.value;
+            cur = cur.next;
+            yield return value;
+        }
+    }
 }
 
 public class ArrayStack<T>
