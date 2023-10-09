@@ -1,5 +1,3 @@
-using System.Collections.Concurrent;
-using System.Runtime.InteropServices;
 
 public class Sorts
 {
@@ -298,7 +296,6 @@ class HeapSort<T> where T : IComparable
         while (k * 2 < N)
         {
             int l = k * 2;
-            Console.WriteLine(l);
             if (less(arr, l, l + 1)) l++;
             if (!less(arr, k, l)) break;
             exchange(arr, k, l);
