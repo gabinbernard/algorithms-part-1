@@ -7,13 +7,13 @@ public class Sorts
     {
         Console.WriteLine("\n# Sorts\n");
 
-        int[] test = new int[50000];
-        for (int i = 0; i < 50000; i++)
+        int[] test = new int[102];
+        for (int i = 0; i < 102; i++)
         {
             Random random = new Random();
-            test[i] = random.Next(-500000, 500000);
+            test[i] = random.Next(-100, 100);
         }
-        QuickSort<int>.Sort(test);
+        HeapSort<int>.Sort(test);
         Console.WriteLine(string.Join(", ", test));
         FisherYates<int>.Shuffle(test);
         Console.WriteLine(string.Join(", ", test));
@@ -272,5 +272,49 @@ class QuickSort<T> where T : IComparable
         T temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;
+    }
+}
+
+class HeapSort<T> where T : IComparable
+{
+
+    public static void Sort(T[] arr)
+    {
+        int N = arr.Length;
+        for (int i = N / 2; i >= 1; i--)
+        {
+            Sink(arr, N, i);
+        }
+
+        while (N > 1)
+        {
+            exchange(arr, 1, N--);
+            Sink(arr, N, 1);
+        }
+    }
+
+    private static void Sink(T[] arr, int N, int k)
+    {
+        while (k * 2 < N)
+        {
+            int l = k * 2;
+            Console.WriteLine(l);
+            if (less(arr, l, l + 1)) l++;
+            if (!less(arr, k, l)) break;
+            exchange(arr, k, l);
+            k = l;
+        }
+    }
+
+    private static bool less(T[] arr, int a, int b)
+    {
+        return arr[a - 1].CompareTo(arr[b - 1]) < 0;
+    }
+
+    private static void exchange(T[] arr, int a, int b)
+    {
+        T temp = arr[a - 1];
+        arr[a - 1] = arr[b - 1];
+        arr[b - 1] = temp;
     }
 }

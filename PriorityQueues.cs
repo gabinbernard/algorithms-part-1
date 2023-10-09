@@ -13,6 +13,23 @@ public class PriorityQueues
         Console.WriteLine(pq.DelMin());
         Console.WriteLine(pq.DelMin());
         Console.WriteLine(pq.DelMin());
+
+        HeapMaxPQ<int> heappq = new HeapMaxPQ<int>();
+        heappq.Insert(2);
+        heappq.Insert(45);
+        heappq.Insert(4);
+        heappq.Insert(1);
+        heappq.Insert(22);
+        heappq.Insert(2);
+        heappq.Insert(40);
+        heappq.Insert(3);
+        heappq.Insert(8);
+        heappq.Insert(21);
+        Console.WriteLine(heappq.DelMax());
+        Console.WriteLine(heappq.DelMax());
+        Console.WriteLine(heappq.DelMax());
+        Console.WriteLine(heappq.DelMax());
+        Console.WriteLine(heappq.DelMax());
     }
 
 }
@@ -79,5 +96,79 @@ public class UnorderedMinPQ<T> where T : IComparable
             previous.Next = previous.Next.Next;
         }
         return minNode.Value;
+    }
+}
+
+public class HeapMaxPQ<T> where T : IComparable
+{
+    T[] elems;
+    int N = 0;
+
+    public HeapMaxPQ()
+    {
+        elems = new T[100];
+    }
+
+    public void Insert(T elem)
+    {
+        elems[++N] = elem;
+        Swim(N);
+    }
+
+    public T Max()
+    {
+        if (N == 0)
+        {
+            throw new Exception("Trying to get max of empty priority queue");
+        }
+        return elems[1];
+    }
+
+    public T DelMax()
+    {
+        if (N == 0)
+        {
+            throw new Exception("Trying to get max of empty priority queue");
+        }
+        T max = elems[1];
+        exchange(elems, 1, N);
+
+        elems[N--] = default;
+        Sink(1);
+
+        return max;
+    }
+
+    private void Sink(int k)
+    {
+        while (k * 2 <= N)
+        {
+            int l = k * 2;
+            if (less(elems[l], elems[l + 1])) l++;
+            if (!less(elems[k], elems[l])) break;
+            exchange(elems, k, l);
+            k = l;
+        }
+    }
+
+    private void Swim(int k)
+    {
+        while (k > 1 && less(elems[k / 2], elems[k]))
+        {
+            exchange(elems, k, k / 2);
+            k = k / 2;
+        }
+    }
+
+    private bool less(T a, T b)
+    {
+        return a.CompareTo(b) < 0;
+    }
+
+    private void exchange(T[] arr, int a, int b)
+    {
+        T temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
     }
 }
