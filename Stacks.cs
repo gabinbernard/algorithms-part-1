@@ -4,6 +4,7 @@ public class StacksExample
     {
         Console.WriteLine("\n# Stacks\n");
 
+        Console.WriteLine("=====> Stack");
         ArrayStack<int> llstack = new ArrayStack<int>();
 
         Console.WriteLine(llstack.Length());
@@ -32,6 +33,20 @@ public class StacksExample
             llstack.Pop();
         }
         llstack.Print();
+
+
+        LLQueue<int> llqueue = new LLQueue<int>();
+
+        Console.WriteLine("=====> Queue");
+        llqueue.Enqueue(1);
+        llqueue.Enqueue(2);
+        llqueue.Enqueue(3);
+        Console.WriteLine(llqueue.Dequeue());
+        llqueue.Enqueue(4);
+        Console.WriteLine(llqueue.Length());
+        Console.WriteLine(llqueue.Dequeue());
+        Console.WriteLine(llqueue.Dequeue());
+        Console.WriteLine(llqueue.Dequeue());
 
     }
 }
@@ -77,6 +92,68 @@ public class LLStack<T>
         {
             first = item.next;
         };
+        return item.value;
+    }
+
+    public bool IsEmpty()
+    {
+        return first == null;
+    }
+
+    public int Length()
+    {
+        int len = 0;
+        Node<T> cur = first;
+        if (cur != null) len += 1;
+        while (cur?.next != null)
+        {
+            cur = cur.next;
+            len += 1;
+        }
+        return len;
+    }
+}
+
+public class LLQueue<T>
+{
+    private Node<T> first = null;
+    private class Node<NT>
+    {
+        internal NT value { get; set; }
+        internal Node<NT>? next;
+    }
+
+    public void Enqueue(T value)
+    {
+        Node<T> item = new Node<T>()
+        {
+            value = value,
+            next = null
+        };
+
+        if (first == null)
+        {
+            first = item;
+            return;
+        }
+
+        Node<T> last = first;
+        while (last.next != null)
+            last = last.next;
+
+        last.next = item;
+    }
+
+    public T Dequeue()
+    {
+        if (first == null)
+        {
+            throw new Exception("Trying to pop an empty stack");
+        }
+
+        Node<T> item = first;
+        first = first.next;
+
         return item.value;
     }
 
